@@ -1,0 +1,46 @@
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+**env/
+ENV/
+env.bak/
+venv.bak/
+*.log
+*.pot
+db.sqlite3
+media
+node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store
+docker-compose.override.yml
+
+venv
+__pycache__
+*.sqlite
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.env
+
+# Virtualenv
+**/venv/
+**/ENV/
+**/env/
+**/.venv/
+**/env.bak/
+**/venv.bak/
+
+# Django
+**/*.log
+**/*.pot
+**/*.pyc
+**/__pycache__/
+**/*.sqlite3
+**/media/
