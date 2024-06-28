@@ -17,8 +17,7 @@ phases:
   pre_build:
     commands:
       - echo "Logging in to Amazon ECR"
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_1
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_2
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_IDEAHUB_REPO
       - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - echo $COMMIT_HASH
 
