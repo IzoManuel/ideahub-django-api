@@ -34,7 +34,7 @@ phases:
   post_build:
     commands:
       - echo "Tagging Docker images"
-      - docker tag ideahub-django-api:latest $ECR_IDEAHUB_REPO::$COMMIT_HASH
+      - docker tag ideahub-django-api:latest $ECR_IDEAHUB_REPO:$COMMIT_HASH
       - echo "Pushing Docker images to Amazon ECR"
       - docker push $ECR_IDEAHUB_REPO:$COMMIT_HASH
 
