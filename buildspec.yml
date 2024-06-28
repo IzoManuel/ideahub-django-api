@@ -1,0 +1,40 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: "ap-south-1"
+    ECR_IDEAHUB_REPO: "827539382247.dkr.ecr.ap-south-1.amazonaws.com/ideahub-django-api"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "Installing docker-compose and awscli"
+      - apt-get update -y
+      - apt-get install -y docker-compose awscli
+
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR"
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_1
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_2
+      - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - echo $COMMIT_HASH
+
+  build:
+    commands:
+      - echo "Building Docker images"
+      - docker-compose build
+
+  post_build:
+    commands:
+      - echo "Tagging Docker images"
+      - docker tag ideahub-django-api:latest $ECR_IDEAHUB_REPO::$COMMIT_HASH
+      - echo "Pushing Docker images to Amazon ECR"
+      - docker push $ECR_IDEAHUB_REPO:$COMMIT_HASH
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: true
