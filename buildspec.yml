@@ -1,6 +1,9 @@
 version: 0.2
 
 env:
+  secrets-manager:
+    DOCKERHUB_USERNAME: "/cicd/dockerhub:username"
+    DOCKERHUB_ACCESS_TOKEN: "/cicd/dockerhub:personal_access_token"
   variables:
     AWS_REGION: "ap-south-1"
     ECR_IDEAHUB_REPO: "827539382247.dkr.ecr.ap-south-1.amazonaws.com/ideahub-django-api"
@@ -18,6 +21,8 @@ phases:
     commands:
       - echo "Logging in to Amazon ECR"
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_IDEAHUB_REPO
+      - echo "Logging in to Docker Hub"
+      - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin    
       - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - echo $COMMIT_HASH
 
