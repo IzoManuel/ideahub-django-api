@@ -35,6 +35,7 @@ phases:
     commands:
       - echo "Tagging Docker images"
       - docker tag ideahub-django-api:latest $ECR_IDEAHUB_REPO:$COMMIT_HASH
+      - docker tag ideahub-django-api:latest $ECR_IDEAHUB_REPO:latest
       - echo "Pushing Docker images to Amazon ECR"
       - docker push $ECR_IDEAHUB_REPO:$COMMIT_HASH
       - docker push $ECR_IDEAHUB_REPO:latest
