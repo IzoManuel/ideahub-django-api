@@ -10,7 +10,8 @@ EXPOSE 8000
 
 ENV DJANGO_SETTINGS_MODULE=settings.local
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && bash scripts/populate_db.sh 100 && python manage.py runserver 0.0.0.0:8000"]
+
 
 
 
